@@ -17,6 +17,13 @@ Route::group(['namespace' => 'UserManagement'], function() {
     Route::post("/logout","UserController@logout");
 });
 
+Route::group(['middleware' => ValidateRequest::class], function () {
+    Route::group(['namespace' => 'StoreManagement'], function () {
+        Route::post("/shop","StoreController@create");
+        Route::get("/shop/{id}","StoreController@get");
+    });
+});
+
 Route::get("/", function(Request $request) {
     return response()->json([
         'success' => 1,

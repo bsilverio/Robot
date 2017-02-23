@@ -1,3 +1,5 @@
 /.vagrant
 /.idea
 /src/core/vendor
+/src/core/storage
+/src/core/.env

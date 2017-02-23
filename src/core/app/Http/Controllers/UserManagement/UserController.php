@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\AktivController;
+use App\Http\Controllers\RobotController;
 use Illuminate\Support\Facades\Config;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
@@ -21,20 +21,22 @@ class UserController extends RobotController
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return response()->json(['success' => 0, 'error' => trans('auth.failed')], 401);
             }
         } catch (JWTException $e) {
             // something went wrong
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['success' => 0, 'error' => $e->getMessage()], 500);
         }
+        $token = compact('token');
+        $token=$token['token'];
+
+        $user = JWTAuth::authenticate($token);
+        $user = $user->toArray();
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
-
         return response()->json([
             'success' => 1,
-            'response' => 'Aktiv API v0.1',
-            compact('token')
+            'response' => ['token' => $token,'user' => $user],
         ]);
     }
 

@@ -2,29 +2,17 @@
 
 namespace Tests\Uni;
 
-use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserClassTest extends TestCase
+class LoginTest extends TestCase
 {
-
-    protected $user;
-    protected $password;
-    protected $hashedPassword;
 
     public function setUp() {
         parent::setUp();
-
-        $this->user = new User();
-        $this->user->first_name = "benjamin joseph";
-        $this->user->last_name = "silverio";
-        $this->user->email = "benjosilverio@gmail.com";
-        $this->user->password = "password";
-        $this->user->save();
     }
 
     /**
@@ -32,15 +20,48 @@ class UserClassTest extends TestCase
      *
      * @return void
      */
-    public function testRegisterAccount()
+    public function testValidAccount()
     {
-        $response = $this->post('/register', [
-            'username' => 'benjosilverio@gmail.com',
+        $response = $this->post('/login', [
+            'email' => 'benjosilverio@gmail.com',
             'password' => 'password'
         ]);
 
+        $response
+            ->assertJson([
+                'success' => 1
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'success',
+                'response' => [
+                'token','user' =>
+                        ['email','first_name','last_name','id']
+                ]
+            ]);
+    }
+
+    /**
+     * A test for api login.
+     *
+     * @return void
+     */
+    public function testInvalidAccount()
+    {
+        $response = $this->post('/login', [
+            'email' => 'benjosilverio@gmail.com',
+            'password' => 'passwor'
+        ]);
 
 
+        $response
+            ->assertStatus(401)
+            ->assertExactJson([
+                'success' => 0,
+                'error' => "These credentials do not match our records."
+            ]);
     }
 
 }
