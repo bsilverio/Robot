@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Middleware\ValidateRegistrationRequest;
+use App\Http\Middleware\ValidateRequest;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +19,13 @@ Route::group(['namespace' => 'UserManagement'], function() {
 
 Route::group(['middleware' => ValidateRequest::class], function () {
     Route::group(['namespace' => 'StoreManagement'], function () {
+        Route::post("/shop/{id}/execute","StoreController@execute");
         Route::post("/shop","StoreController@create");
         Route::get("/shop/{id}","StoreController@get");
+        Route::delete("/shop/{id}","StoreController@delete");
+        Route::post("/shop/{id}/robot","StoreController@create_robot");
+        Route::put("/shop/{id}/robot/{rid}","StoreController@update_robot");
+        Route::delete("/shop/{id}/robot/{rid}","StoreController@delete_robot");
     });
 });
 

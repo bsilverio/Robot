@@ -16,7 +16,7 @@ class LoginTest extends TestCase
     }
 
     /**
-     * A test for api login.
+     * A test for api login with valid account.
      *
      * @return void
      */
@@ -44,15 +44,36 @@ class LoginTest extends TestCase
     }
 
     /**
-     * A test for api login.
+     * A test for api login for incorrect password.
      *
      * @return void
      */
-    public function testInvalidAccount()
+    public function testInvalidPasswordAccount()
     {
         $response = $this->post('/login', [
             'email' => 'benjosilverio@gmail.com',
             'password' => 'passwor'
+        ]);
+
+
+        $response
+            ->assertStatus(401)
+            ->assertExactJson([
+                'success' => 0,
+                'error' => "These credentials do not match our records."
+            ]);
+    }
+
+    /**
+     * A test for api login for incorrect email.
+     *
+     * @return void
+     */
+    public function testInvalidEmailAccount()
+    {
+        $response = $this->post('/login', [
+            'email' => 'benjosilverio@gmai.com',
+            'password' => 'password'
         ]);
 
 

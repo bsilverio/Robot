@@ -16,9 +16,10 @@ class CreateRobotsTable extends Migration
         Schema::create('robot_robotsph', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('store_id');
-            $table->integer('x_coordinate');
-            $table->integer('y_coordinate');
-            $table->char('direction');
+            $table->integer('x');
+            $table->integer('y');
+            $table->char('heading');
+            $table->string('commands');
             $table->timestamps();
         });
     }

@@ -19,5 +19,34 @@ class DatabaseSeeder extends Seeder
             'email' => 'benjosilverio@gmail.com',
             'password' => bcrypt('password'),
         ]);
+
+        $store = DB::table('robot_storesph')->insert([
+            'width' => 12,
+            'height' => 12
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 0,
+            'heading' => 'E',
+            'commands' => 'RMMLMRMM',
+            'store_id' => $store
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 6,
+            'y' => 6,
+            'heading' => 'E',
+            'commands' => 'RMMLMRMM',
+            'store_id' => $store
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 9,
+            'y' => 9,
+            'heading' => 'E',
+            'commands' => 'RMMLMRMM',
+            'store_id' => $store
+        ]);
     }
 }
