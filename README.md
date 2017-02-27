@@ -13,6 +13,6 @@ benjosilverio@gmail.com
 #password#
 password
 
-# Copy the result token and place on all request headers #
+# Copy the result token and place on every request headers #
 Key: Authorization
 Value: bearer [TOKEN]
