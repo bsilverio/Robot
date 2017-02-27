@@ -3,3 +3,4 @@
 /src/core/vendor
 /src/core/storage
 /src/core/.env
+ec2.pem
