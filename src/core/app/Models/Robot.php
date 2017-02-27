@@ -169,7 +169,7 @@ class Robot extends Model
             } else {
                 $key = array_search($this->heading, $directions);
                 $newKey = $key + $command < 0 ? count($directions) - 1 : $key + $command;
-
+                $newKey = $newKey > count($directions) - 1 ? 0 : $newKey;
                 $this->heading = $directions[$newKey];
             }
 
