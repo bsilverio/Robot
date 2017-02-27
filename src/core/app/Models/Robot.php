@@ -23,6 +23,8 @@ class Robot extends Model
      */
     protected $table = 'robot_robotsph';
 
+    protected $guarded = ['x','y','heading','commands'];
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -158,30 +160,20 @@ class Robot extends Model
     }
 
     public function executeCommand($count) {
-        $command = $this->commandsArray[$count - 1];
-        $movementValue = Config::get('robot.movement_values');
-        $directions = Config::get('robot.directions');
-        $oldLocation = [$this->y, $this->x];
-        if($command === 0) {
-            switch($this->heading) {
-                case 'N':
-                case 'S':
-                    $newLocation = [$this->y + $movementValue[$this->heading], $this->x];
-                    break;
-                case 'E':
-                case 'W':
-                    $newLocation = [$this->y, $this->x + $movementValue[$this->heading]];
-                    break;
-            }
-            echo $this->heading,"<br /><pre>";
-            print_r($oldLocation);
-            print_r($newLocation);
-            echo "</pre>";
-        } else {
-            $key = array_search($this->heading, $directions);
-            $newKey = $key + $command < 0 ? count($directions) - 1 : $key + $command;
+        if(array_key_exists($count - 1, $this->commandsArray)) {
+            $command = $this->commandsArray[$count - 1];
+            $movementValue = Config::get('robot.movement_values');
+            $directions = Config::get('robot.directions');
+            if($command === 0) {
+                $this->{$movementValue[$this->heading][0]} += $movementValue[$this->heading][1];
+            } else {
+                $key = array_search($this->heading, $directions);
+                $newKey = $key + $command < 0 ? count($directions) - 1 : $key + $command;
 
-            $this->heading = $directions[$key + $command];
+                $this->heading = $directions[$newKey];
+            }
+
+            $this->save();
         }
     }
 }

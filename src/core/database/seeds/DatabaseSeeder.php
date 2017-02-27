@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Store;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $store = DB::table('robot_storesph')->insert([
+        $store = Store::create([
             'width' => 12,
             'height' => 12
         ]);
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'y' => 0,
             'heading' => 'E',
             'commands' => 'RMMLMRMM',
-            'store_id' => $store
+            'store_id' => $store->id
         ]);
 
         DB::table('robot_robotsph')->insert([
@@ -38,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'y' => 6,
             'heading' => 'E',
             'commands' => 'RMMLMRMM',
-            'store_id' => $store
+            'store_id' => $store->id
         ]);
 
         DB::table('robot_robotsph')->insert([
@@ -46,7 +47,98 @@ class DatabaseSeeder extends Seeder
             'y' => 9,
             'heading' => 'E',
             'commands' => 'RMMLMRMM',
-            'store_id' => $store
+            'store_id' => $store->id
         ]);
+
+        $store = Store::create([
+            'width' => 12,
+            'height' => 12
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 0,
+            'heading' => 'E',
+            'commands' => 'MRMLMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 3,
+            'heading' => 'S',
+            'commands' => 'MLMMMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 7,
+            'heading' => 'N',
+            'commands' => 'MRRMML',
+            'store_id' => $store->id
+        ]);
+
+        $store = Store::create([
+            'width' => 12,
+            'height' => 12
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 0,
+            'heading' => 'E',
+            'commands' => 'MRMLMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 3,
+            'heading' => 'S',
+            'commands' => 'MMMMMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 7,
+            'heading' => 'N',
+            'commands' => 'MMMMML',
+            'store_id' => $store->id
+        ]);
+
+
+
+        $store = Store::create([
+            'width' => 12,
+            'height' => 12
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 0,
+            'heading' => 'E',
+            'commands' => 'MRMLMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 3,
+            'heading' => 'S',
+            'commands' => 'RMMMMM',
+            'store_id' => $store->id
+        ]);
+
+        DB::table('robot_robotsph')->insert([
+            'x' => 0,
+            'y' => 7,
+            'heading' => 'N',
+            'commands' => 'LMMMML',
+            'store_id' => $store->id
+        ]);
+
+
     }
 }

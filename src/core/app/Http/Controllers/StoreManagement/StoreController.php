@@ -129,9 +129,10 @@ class StoreController extends RobotController
 
                     return response()->json($response, HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
                 } else {
+                    Robot::unguard();
                     $robot = new Robot($input);
                     $store->robots()->save($robot);
-
+                    Robot::reguard();
                     return response()->json($robot->toArray(), HttpResponse::HTTP_OK);
                 }
             }
